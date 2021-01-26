@@ -1,0 +1,9 @@
+[Master]
+M ansible_host=sfostg01
+M2 ansible_host=sfostg02
+M3 ansible_host=sfostg03
+
+[Worker]
+W1 ansible_host=ersstg
+W2 ansible_host=nms
+W3 ansible_host=sfostg04
