@@ -1,0 +1,39 @@
+---
+#- name: Kubernetes Repo
+#  yum_repository:
+#    name: Kubernetes
+#    description: Kubernetes Repo
+#    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+#    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+#    gpgcheck: yes
+#
+#- name: Install Kubelet
+#  yum:
+#    name: kubelet
+#    state: present
+#    update_cache: true
+#
+#- name: Install KubeAdm
+#  yum:
+#    name: kubeadm
+#    state: present
+#
+#- name: Kubectl
+#  when: inventory_hostname in groups['PMaster']
+#  yum:
+#    name: kubectl
+#    state: present
+#
+#- name: Kubectl
+#  when: inventory_hostname in groups['SMaster']
+#  yum:
+#    name: kubectl
+#    state: present
+#
+- name: Master
+  when: inventory_hostname in groups['Master']
+  include: master.yml
+
+#- name: Join
+#  include: glue.yml
+...

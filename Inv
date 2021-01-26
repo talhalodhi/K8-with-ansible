@@ -1,0 +1,12 @@
+[Master:children]
+PMaster
+SMaster
+
+[PMaster]
+M ansible_host=km
+
+[SMaster]
+M2 ansible_host=km2
+
+[Worker]
+W1 ansible_host=kw1

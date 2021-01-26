@@ -1,0 +1,7 @@
+---
+- name: Update, Upgrade
+  yum:
+    update_cache: yes
+    name: '*'
+    state: latest
+...

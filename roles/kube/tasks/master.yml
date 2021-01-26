@@ -1,0 +1,36 @@
+---
+- name: VIP
+  shell: "sudo docker run --network host --rm plndr/kube-vip:0.2.1 manifest pod \
+--interface eth0 \
+--vip {{ vip_ip }} \
+--arp \
+--leaderElection >> /etc/kubernetes/manifests/vip.yaml"
+
+- name:
+  shell: "kubeadm init  --control-plane-endpoint {{ vip_ip }}:6443  --upload-certs"
+
+- name: Initialize Cluster
+  shell: kubeadm init --pod-network-cidr=10.0.0.0/16 >> ClusterInitialized.txt
+  args:
+    chdir: $HOME
+    creates: ClusterInitialized.txt
+
+- name: Create .kube
+  file:
+    path: ~{{ user }}/.kube
+    state: directory
+    mode: 0755
+
+- name: Copy admin.conf To Kube Config
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: $HOME/.kube/config
+    remote_src: yes
+    owner: "{{ user }}"
+
+- name: Install Pod Network
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml >> PodNetworkSetup.txt
+  args:
+    chdir: $HOME
+    creates: PodNetworkSetup.txt
+...

@@ -1,0 +1,35 @@
+---
+- name: Setup Kubernetes
+  hosts: all
+  gather_facts: False
+  roles:
+    - role: preup
+      become: true
+      tags:
+        - all
+        - update
+
+    - role: docker
+      become: true
+      tags:
+        - all
+        - docker
+
+    - role: group
+      become: true
+      tags:
+        - all
+        - group
+
+    - role: presetup
+      become: true
+      tags:
+        - all
+        - presetup
+
+    - role: kube
+      become: true
+      tags:
+        - all
+        - kube
+...
